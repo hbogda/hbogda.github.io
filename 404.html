@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 // hbogda</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+  body {
+    margin: 0;
+    background: #020c02;
+    color: #00ff41;
+    font-family: 'Share Tech Mono', monospace;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.25) 0 1px, transparent 1px 3px);
+    pointer-events: none;
+  }
+  .box { text-align: center; padding: 0 16px; }
+  .code {
+    font-family: 'VT323', monospace;
+    font-size: clamp(4rem, 14vw, 9rem);
+    line-height: 1;
+    margin: 0;
+    color: #00ff41;
+    text-shadow: 0 0 20px rgba(0,255,65,0.5);
+  }
+  .msg { color: #4a7a4a; letter-spacing: 2px; margin: 12px 0 36px; }
+  .cursor-line { color: #00e5ff; margin-bottom: 32px; min-height: 1.2em; }
+  a {
+    color: #00e5ff;
+    text-decoration: none;
+    border: 1px solid #00e5ff;
+    padding: 10px 24px;
+    letter-spacing: 2px;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  a:hover { background: #00e5ff; color: #020c02; box-shadow: 0 0 16px rgba(0,229,255,0.5); }
+</style>
+</head>
+<body>
+  <div class="box">
+    <p class="code">ERROR 404</p>
+    <p class="msg">&gt; ARCHIVO NO ENCONTRADO EN SYS://HBOGDA</p>
+    <p class="cursor-line">&gt; <span id="typed"></span><span id="blink">_</span></p>
+    <a href="/">&gt; VOLVER AL INICIO</a>
+  </div>
+<script>
+  const lines = [
+    'el archivo que buscás no existe...',
+    'o fue borrado por un rm -rf imprudente.'
+  ];
+  const typed = document.getElementById('typed');
+  const blink = document.getElementById('blink');
+  let li = 0, ci = 0, deleting = false;
+  blink.style.animation = 'blink 1s steps(1) infinite';
+  const style = document.createElement('style');
+  style.textContent = '@keyframes blink { 50% { opacity: 0; } }';
+  document.head.appendChild(style);
+  function tick() {
+    const line = lines[li];
+    if (!deleting && ci <= line.length) {
+      typed.textContent = line.slice(0, ci++);
+      setTimeout(tick, 45);
+    } else if (!deleting) {
+      deleting = true;
+      setTimeout(tick, 1800);
+    } else if (ci > 0) {
+      typed.textContent = line.slice(0, --ci);
+      setTimeout(tick, 18);
+    } else {
+      deleting = false;
+      li = (li + 1) % lines.length;
+      setTimeout(tick, 400);
+    }
+  }
+  tick();
+</script>
+<script data-goatcounter="https://hbogda.goatcounter.com/count"
+ async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
